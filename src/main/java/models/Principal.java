@@ -8,8 +8,10 @@ public class Principal extends Staff {
         super(firstName, lastName, address, sex, age, id);
     }
 
+
     public void expelStudent(long matricNumber) {
         Student student = School.getStudent(matricNumber);
+        //checks if student with the provided matric number exists in the students list
         if(student != null) {
             School.removeStudent(matricNumber);
             School.getGrade(student.getGradeId()).removeMember(student.getMatricNumber());
@@ -19,7 +21,7 @@ public class Principal extends Staff {
 
 
     public Student admitApplicant(Applicant applicant, long matricNumber, long gradeId) {
-
+        //checks if applicants meets the acceptance age criteria
         if(applicant.getAge() > School.MAX_AGE){
             System.out.println("Applicant too old to be admitted");
             return null;
@@ -29,15 +31,20 @@ public class Principal extends Staff {
             System.out.println("Applicant too young to be admitted");
             return null;
         }
-
-        Student newStudent = new Student(applicant, gradeId, matricNumber);
-        School.addStudent(newStudent);
-        School.getGrade(gradeId).addMember(matricNumber);
-        System.out.println(applicant.getFirstName() + " has been admitted to the school");
-        return newStudent;
+        //checks if a student with a similar matric number already exists
+        if(School.getStudent(matricNumber) == null) {
+            Student newStudent = new Student(applicant, gradeId, matricNumber);
+            School.addStudent(newStudent);
+            School.getGrade(gradeId).addMember(matricNumber);
+            System.out.println(applicant.getFirstName() + " has been admitted to the school");
+            return newStudent;
+        }
+        System.out.println("Student with this matric numnber already exists");
+        return null;
     }
 
     public Teacher employTeacher(String firstName, String lastName, String address, String sex, int age, long id) {
+        //checks if teacher with similar staff id exists before creating a new teacher
         if(School.getStaff(id) == null){
             Teacher newTeacher = new Teacher(firstName, lastName, address, sex, age, id);
             School.addStaff(newTeacher);
@@ -57,6 +64,7 @@ public class Principal extends Staff {
     }
 
     public Grade createGrade(long id, String name) {
+        //checks if grade with similar course code exists before creating a new course
         if(School.getGrade(id) == null) {
             Grade newGrade = new Grade();
             newGrade.setName(name);
@@ -73,9 +81,14 @@ public class Principal extends Staff {
     }
 
     public Course createCourse(String code, int creditLoad, String title, String description) {
-        Course newCourse= new Course(code,creditLoad,title,description);
-        School.addCourse(newCourse);
-        return newCourse;
+        // for duplicate entry of course code
+        if(School.getCourse(code) == null){
+            Course newCourse= new Course(code,creditLoad,title,description);
+            School.addCourse(newCourse);
+            return newCourse;
+        }
+        return null;
+
     }
 
     public void deleteCourse(String code) {
