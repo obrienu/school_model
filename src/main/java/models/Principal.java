@@ -18,22 +18,23 @@ public class Principal extends Staff {
     }
 
 
-    public void admitApplicant(Applicant applicant, long matricNumber, long gradeId) {
+    public Student admitApplicant(Applicant applicant, long matricNumber, long gradeId) {
 
         if(applicant.getAge() > School.MAX_AGE){
             System.out.println("Applicant too old to be admitted");
-            return;
+            return null;
         }
 
         if(applicant.getAge() < School.MIN_AGE){
             System.out.println("Applicant too young to be admitted");
-            return;
+            return null;
         }
 
         Student newStudent = new Student(applicant, gradeId, matricNumber);
         School.addStudent(newStudent);
         School.getGrade(gradeId).addMember(matricNumber);
         System.out.println(applicant.getFirstName() + " has been admitted to the school");
+        return newStudent;
     }
 
     public Teacher employTeacher(String firstName, String lastName, String address, String sex, int age, long id) {

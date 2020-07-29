@@ -16,9 +16,9 @@ public class Person {
         this.lastName = lastName;
         this.address = address;
         this.age = age;
-        if("M".equals(sex)) {
+        if("M".equals(sex.toUpperCase()) || "MALE".equals(sex.toUpperCase())) {
             this.sex = Sex.MALE;
-        } else if ("F".equals(sex)) {
+        } else if ("F".equals(sex.toUpperCase()) || "FEMALE".equals(sex.toUpperCase())) {
             this.sex = Sex.FEMALE;
         } else {
             System.out.println("Invalid sex");
