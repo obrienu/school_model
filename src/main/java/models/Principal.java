@@ -38,9 +38,13 @@ public class Principal extends Staff {
     }
 
     public Teacher employTeacher(String firstName, String lastName, String address, String sex, int age, long id) {
-        Teacher newTeacher = new Teacher(firstName, lastName, address, sex, age, id);
-        School.addStaff(newTeacher);
-        return newTeacher;
+        if(School.getStaff(id) == null){
+            Teacher newTeacher = new Teacher(firstName, lastName, address, sex, age, id);
+            School.addStaff(newTeacher);
+            return newTeacher;
+        }
+            System.out.println("Teacher with this id already exists");
+            return null;
     }
 
     public void sackStaff(long staffId) {
@@ -53,11 +57,15 @@ public class Principal extends Staff {
     }
 
     public Grade createGrade(long id, String name) {
-        Grade newGrade = new Grade();
-        newGrade.setName(name);
-        newGrade.setId(id);
-        School.addGrade(newGrade);
-        return newGrade;
+        if(School.getGrade(id) == null) {
+            Grade newGrade = new Grade();
+            newGrade.setName(name);
+            newGrade.setId(id);
+            School.addGrade(newGrade);
+            return newGrade;
+        }
+        System.out.println("A grade with similar id already exists");
+        return null ;
     }
 
     public void removeGrade(long id) {
