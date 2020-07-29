@@ -32,7 +32,7 @@ public class Grade {
         this.id = id;
     }
 
-
+    //returns a list of all the class member using the students code for the class and the general schools list of students
     public List<Student> getClassMembers() {
         List<Student> members = new ArrayList<>();
         for(long id: classMembers) {
@@ -42,6 +42,7 @@ public class Grade {
     }
 
     public void addMember(long id) {
+        // adds students to the list, but refuses multiple entry
         if(classMembers.indexOf(id) == -1){
             classMembers.add(id);
         }else {

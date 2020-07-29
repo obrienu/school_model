@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class School {
+    //Serves as a database for students, courses, staff and grades/classes
     private static Map<String, Course> coursesList = new HashMap<>();
     private static Map<Long, Staff> staffList = new HashMap<>();
     private static Map<Long, Student> studentList = new HashMap<>();
@@ -20,12 +21,25 @@ public class School {
         return coursesList;
     }
 
+
+
+    /**
+     *
+     * @param courseCode
+     * @return
+     */
     public static Course getCourse(String courseCode) {
+        //returns a particular course with the course code provided
         Course course;
         return coursesList.get(courseCode);
     }
 
+    /**
+     *
+     * @param course
+     */
     public static void addCourse(Course course) {
+        //adds a course to the course list, prevents duplicate of course code
         if(coursesList.get(course.getCode()) == null) {
             coursesList.put(course.getCode(), course);
         }else {
@@ -33,6 +47,10 @@ public class School {
         }
     }
 
+    /**
+     *
+     * @param courseCode
+     */
     public static void removeCourse(String  courseCode) {
         coursesList.remove(courseCode);
     }
@@ -43,12 +61,22 @@ public class School {
         return staffList;
     }
 
+    /**
+     *
+     * @param staffId
+     * @return
+     */
     public static Staff getStaff(long staffId) {
-        Staff staff;
+        //returns the staff with specified staff id
         return staffList.get(staffId);
     }
 
+    /**
+     *
+     * @param staff
+     */
     public static void addStaff(Staff staff) {
+        //checks if a staff with similar id already exists before adding the staff
         if(staffList.get(staff.getId()) == null){
             staffList.put(staff.getId(), staff);
         }else {
@@ -56,7 +84,12 @@ public class School {
         }
     }
 
+    /**
+     *
+     * @param staffId
+     */
     public static void removeStaff(long staffId) {
+        //removes the specified staff with id
         staffList.remove(staffId);
     }
 
@@ -64,11 +97,21 @@ public class School {
         return studentList;
     }
 
+    /**
+     *
+     * @param matricNumber
+     * @return
+     */
     public static Student getStudent(long matricNumber) {
         return studentList.get(matricNumber);
     }
 
+    /**
+     *
+     * @param student
+     */
     public static void addStudent(Student student) {
+        //checks if student with the matric number already exists, to prevent multiple entry
         if (studentList.get(student.getMatricNumber()) == null) {
             studentList.put(student.getMatricNumber(), student);
         } else {
@@ -76,7 +119,12 @@ public class School {
         }
     }
 
+    /**
+     *
+     * @param matricNumber
+     */
     public static void removeStudent(long matricNumber) {
+
         if (studentList.get(matricNumber) == null) {
             System.out.println("Student with this matric number does not exists");
         } else {
@@ -88,11 +136,21 @@ public class School {
         return gradeList;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public static Grade getGrade(long id) {
         return gradeList.get(id);
     }
 
+    /**
+     *
+     * @param grade
+     */
     public static void addGrade(Grade grade) {
+        //checks if grade with same course code already exists
         if(gradeList.get(grade.getId()) == null) {
             gradeList.put(grade.getId(), grade);
         } else {
@@ -100,9 +158,14 @@ public class School {
         }
     }
 
+    /**
+     *
+     * @param id
+     */
     public static void removeGrade(long id){
         gradeList.remove(id);
     }
+
 
     public static  void clearLists() {
         staffList.clear();
@@ -111,14 +174,28 @@ public class School {
         coursesList.clear();
     }
 
-
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param sex
+     * @param age
+     * @param id
+     * @return
+     */
     public Principal employPrincipal(String firstName, String lastName, String address, String sex, int age, long id) {
         Principal principal = new Principal(firstName, lastName, address, sex, age, id);
         staffList.put(id, principal);
         return principal;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void sackPrincipal(long id) {
+        //checks to make sure the id provided is a principals id
         if(getStaffList().get(id) == null || !(staffList.get(id) instanceof Principal)){
             System.out.println("Enter correct id");
             return;
